@@ -1,3 +1,6 @@
+require("dotenv").config() 
+const client = require("./plugins/contentful")
+
 export default {
   mode: 'universal',
   /*
@@ -27,7 +30,9 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    '~/plugins/contentful'
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -40,8 +45,36 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/markdownit'
   ],
+
+  markdownit: {
+    injected: true,
+    html: true,
+    linkify: true,
+    typography: true,
+  },
+  generate: {
+    routes() {
+      return client
+        .getEntries({ content_type: 'post' })
+        .then(entries => {
+          return entries.items.map(entry => {
+            return {
+              route: "/posts/"+entry.fields.slug,
+              payload: entry
+            }
+          })
+        })
+    }
+  },
+  env: {
+    CTF_SPACE_ID: process.env.CTF_SPACE_ID,
+    CTF_ACCESS_TOKEN: process.env.CTF_ACCESS_TOKEN,
+  },
+  
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -57,3 +90,4 @@ export default {
     extend(config, ctx) {}
   }
 }
+

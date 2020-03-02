@@ -1,35 +1,24 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        oshirofolio
-      </h1>
-      <h2 class="subtitle">
-        oshiroscope&#39;s portfolio
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+  <div class="posts">
+    <div v-for="(post, index) in posts" :key="index" class="post">
+      {{ post.fields.title }}
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
+import client from '~/plugins/contentful'
 export default {
-  components: {
-    Logo
+  asyncData({ params }) {
+    return client
+      .getEntries({
+        content_type: 'post',
+        order: '-sys.createdAt'
+      })
+      .then((entries) => {
+        return { posts: entries.items }
+      })
+      .catch((e) => console.log(e))
   }
 }
 </script>
