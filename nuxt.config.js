@@ -30,7 +30,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/contentful'
+    '~/plugins/contentful',
+    { src :'~/plugins/vue-parallax-js', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules

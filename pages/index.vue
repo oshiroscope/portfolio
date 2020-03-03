@@ -1,8 +1,6 @@
 <template>
   <section class="background">
-    <div class="rellax">
-      <img src="~/assets/images/teaser.png" class="teaser">
-    </div>
+    <img src="~/assets/images/teaser.png" class="teaser" v-parallax.absY="0.4">
     <div class="container">
       <!-- bio -->
       <div class="post">
@@ -129,12 +127,14 @@ section.background{
 }
 
 .container{
-  margin: 0 auto; // 中央にalignするよ
-  max-width: 1400px; // 拡大しても1400pxよりは大きくならないようにするよ
-  padding-top: 4rem;
+  background-color: #fff;
+  position: relative; // z-indexのために必要
+  z-index: 10;
 }
 
 .post{
+  margin: 0 auto; // 中央にalignするよ
+  max-width: 1400px; // 拡大しても1400pxよりは大きくならないようにするよ
   padding: 2rem;
   padding-top: 4rem;
   display: flex; // CSS Gridで子要素を並べるよ
@@ -169,59 +169,5 @@ section.background{
   font-size: 2.4em;
   color: rgb(48, 48, 48);
 }
-// .post{
-//   display: grid; // CSS Gridで子要素を並べるよ
-//   grid-template-columns: 1fr 2fr;
-//   padding: 2rem;
-//   padding-top: 4rem;
-// }
 
-// .thumb{
-//   grid-column: var(--grid-column);
-// }
-
-// .post-text{
-//   grid-column: var(--grid-column);
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   padding: 2rem;
-//   padding-bottom: 4rem;
-// }
-
-// .post-content{
-//   padding-top: 2rem;
-//   font-size: 22px;
-// }
-
-// .container {
-//   margin: 0 auto;
-//   min-height: 100vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   text-align: center;
-// }
-
-// .title {
-//   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-//     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-//   display: block;
-//   font-weight: 300;
-//   font-size: 100px;
-//   color: #35495e;
-//   letter-spacing: 1px;
-// }
-
-// .subtitle {
-//   font-weight: 300;
-//   font-size: 42px;
-//   color: #526488;
-//   word-spacing: 5px;
-//   padding-bottom: 15px;
-// }
-
-// .links {
-//   padding-top: 15px;
-// }
 </style>
