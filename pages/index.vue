@@ -3,7 +3,7 @@
     <img src="~/assets/images/teaser.png" class="teaser" v-parallax.absY="0.4">
     <div class="container">
       <!-- bio -->
-      <div class="post">
+      <div class="post-left">
         <div class="thumb">
           <img :src="bio.fields.image.fields.file.url">
         </div>
@@ -24,7 +24,7 @@
         </div>
       </div>
       <!-- habit -->
-      <div class="post" style="--direction: row-reverse">
+      <div class="post-right" style="--direction: row-reverse">
         <div class="thumb-small">
           <video :src="bio.fields.animation.fields.file.url" loop autoplay muted playsinline />
         </div>
@@ -37,7 +37,7 @@
       <div v-for="(post, index) in posts" :key="index" :to="'posts/'+post.fields.slug">
         <!-- 左右交互に表示する -->
         <!-- 偶数では左 -->
-        <div v-if="index % 2 == 0" class="post" style="--direction: row">
+        <div v-if="index % 2 == 0" class="post-left">
           <div class="thumb">
             <img :src="post.fields.image.fields.file.url">
           </div>
@@ -48,7 +48,7 @@
           </div>
         </div>
         <!-- 奇数では右 -->
-        <div v-else class="post" style="--direction: row-reverse">
+        <div v-else class="post-right">
           <div class="thumb">
             <img :src="post.fields.image.fields.file.url">
           </div>
@@ -132,13 +132,34 @@ section.background{
   z-index: 10;
 }
 
-.post{
+.post-left{
   margin: 0 auto; // 中央にalignするよ
   max-width: 1400px; // 拡大しても1400pxよりは大きくならないようにするよ
   padding: 2rem;
   padding-top: 4rem;
   display: flex; // CSS Gridで子要素を並べるよ
-  flex-direction: var(--direction);
+  flex-direction: row;
+  align-items: center;
+}
+
+.post-right{
+  margin: 0 auto; // 中央にalignするよ
+  max-width: 1400px; // 拡大しても1400pxよりは大きくならないようにするよ
+  padding: 2rem;
+  padding-top: 4rem;
+  display: flex; // CSS Gridで子要素を並べるよ
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+@media screen and (max-width:1000px){
+  .post-left{
+    flex-direction: column;
+  }
+
+  .post-right{
+    flex-direction: column;
+  }
 }
 
 .thumb{
@@ -147,6 +168,16 @@ section.background{
 
 .thumb-small{
   flex: 0.9;
+}
+
+@media screen and (max-width:1000px){
+  .thumb{
+    width: 60%;
+  }
+
+  .thumb-small{
+    width: 54%;
+  }
 }
 
 .post-text{
