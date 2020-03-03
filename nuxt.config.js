@@ -46,7 +46,8 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
-    '@nuxtjs/markdownit'
+    '@nuxtjs/markdownit',
+    'nuxt-fontawesome'
   ],
   markdownit: {
     injected: true,
@@ -87,5 +88,18 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  /*
+  ** Build configuration
+  ** https://qiita.com/mitsuhiro_K/items/704da208c7026a6d7d02
+  */
+  fontawesome: {
+    components: 'far',
+    imports: [
+      {
+        set: '@fortawesome/free-brands-svg-icons',
+        icons: ['fab']
+      }
+    ]
   }
 }
