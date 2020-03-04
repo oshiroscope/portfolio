@@ -3,60 +3,50 @@
     <img src="~/assets/images/teaser.png" class="teaser" v-parallax.absY="0.4">
     <div class="container">
       <!-- bio -->
-      <div class="post-left">
-        <div class="thumb">
-          <img :src="bio.fields.image.fields.file.url">
-        </div>
-        <div class="post-text">
-          <h1>{{ bio.fields.name }}</h1>
-          <div class="post-content" v-html="$md.render(bio.fields.content)" />
-          <br>
-          <div class="icon">
-            <a :href="bio.fields.twitter">
-              <font-awesome-icon :icon="['fab', 'twitter']" />
-            </a>
-            <a :href="bio.fields.instagram">
-              <font-awesome-icon :icon="['fab', 'instagram']" />
-            </a>
-            <font-awesome-icon :icon="['far', 'envelope']" />
-            <!-- <font-awesome-icon icon="envelope" /> -->
+      <div class="content">
+        <div class="left">
+          <div class="thumb">
+            <img :src="bio.fields.image.fields.file.url">
+          </div>
+          <div class="text">
+            <h1>{{ bio.fields.name }}</h1>
+            <div class="sentence" v-html="$md.render(bio.fields.content)" />
+            <br>
+            <div class="icon">
+              <a :href="bio.fields.twitter">
+                <font-awesome-icon :icon="['fab', 'twitter']" />
+              </a>
+              <a :href="bio.fields.instagram">
+                <font-awesome-icon :icon="['fab', 'instagram']" />
+              </a>
+              <font-awesome-icon :icon="['far', 'envelope']" />
+              <!-- <font-awesome-icon icon="envelope" /> -->
+            </div>
           </div>
         </div>
       </div>
       <!-- habit -->
-      <div class="post-right" style="--direction: row-reverse">
-        <div class="thumb-small">
-          <video :src="bio.fields.animation.fields.file.url" loop autoplay muted playsinline />
-        </div>
-        <div class="post-text">
-          <h1>Habit</h1>
-          <div class="post-content" v-html="$md.render(bio.fields.habit)" />
+      <div class="content">
+        <div class="right">
+          <div class="thumb-small">
+            <video :src="bio.fields.animation.fields.file.url" loop autoplay muted playsinline />
+          </div>
+          <div class="text">
+            <h1>Habit</h1>
+            <div class="sentence" v-html="$md.render(bio.fields.habit)" />
+          </div>
         </div>
       </div>
       <!-- contents -->
-      <!-- <div v-for="(post, index) in posts" :key="index" :to="'posts/'+post.fields.slug"> -->
-      <div v-for="(post, index) in posts" :key="index">
-        <!-- 左右交互に表示する -->
-        <!-- 偶数では左 -->
-        <div v-if="index % 2 == 0" class="post-left">
+      <div class="content">
+        <div v-for="(post, index) in posts" :key="index" :class="classLeftRight(index)">
           <div class="thumb">
             <img :src="post.fields.image.fields.file.url">
           </div>
-          <div class="post-text">
+          <div class="text">
             <h1>{{ post.fields.title }}</h1>
             <h2>{{ post.fields.keywords }}</h2>
-            <div class="post-content" v-html="$md.render(post.fields.content)" />
-          </div>
-        </div>
-        <!-- 奇数では右 -->
-        <div v-else class="post-right">
-          <div class="thumb">
-            <img :src="post.fields.image.fields.file.url">
-          </div>
-          <div class="post-text">
-            <h1>{{ post.fields.title }}</h1>
-            <h2>{{ post.fields.keywords }}</h2>
-            <div class="post-content" v-html="$md.render(post.fields.content)" />
+            <div class="sentence" v-html="$md.render(post.fields.content)" />
           </div>
         </div>
       </div>
@@ -67,6 +57,15 @@
 <script>
 import client from '~/plugins/contentful'
 export default {
+  methods: {
+    classLeftRight (index) {
+      if (index % 2 === 0) {
+        return 'left'
+      } else {
+        return 'right'
+      }
+    }
+  },
   // https://blog.cloud-acct.com/posts/blog-contentful-api/
   async asyncData ({ params }) {
     let posts = []
@@ -83,7 +82,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 /*見出しを全て太字で表示 + 文字色を濃い黒に*/
 h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
@@ -92,16 +91,11 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 1.9rem;
-  // margin: 0 0 2rem;
   letter-spacing: 1px;
 }
 
 h2 {
   font-size: 1.7rem;
-  // margin: 3rem 0 2rem;
-  // padding: .4rem 0;
-  // letter-spacing: 1px;
-  // border-bottom: solid 5px #03162f;
 }
 
 // すべての画像・動画について親要素にサイズが追従するようにする
@@ -133,73 +127,64 @@ section.background{
   z-index: 10;
 }
 
-.post-left{
+.content{
   margin: 0 auto; // 中央にalignするよ
   max-width: 1400px; // 拡大しても1400pxよりは大きくならないようにするよ
   padding: 2rem;
   padding-top: 4rem;
-  display: flex; // CSS Gridで子要素を並べるよ
-  flex-direction: row;
-  align-items: center;
-}
-
-.post-right{
-  margin: 0 auto; // 中央にalignするよ
-  max-width: 1400px; // 拡大しても1400pxよりは大きくならないようにするよ
-  padding: 2rem;
-  padding-top: 4rem;
-  display: flex; // CSS Gridで子要素を並べるよ
-  flex-direction: row-reverse;
-  align-items: center;
-}
-
-@media screen and (max-width:1000px){
-  .post-left{
-    flex-direction: column;
+  .left{
+    display: flex; // CSS Gridで子要素を並べるよ
+    align-items: center;
+    flex-direction: row;
   }
-
-  .post-right{
-    flex-direction: column;
+  .right{
+    display: flex; // CSS Gridで子要素を並べるよ
+    align-items: center;
+    flex-direction: row-reverse;
   }
-}
-
-.thumb{
-  flex: 1;
-}
-
-.thumb-small{
-  flex: 0.9;
-}
-
-@media screen and (max-width:1000px){
   .thumb{
-    width: 60%;
+    flex: 1;
   }
-
   .thumb-small{
-    width: 54%;
+    flex: 0.9;
+  }
+  .text{
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    padding-bottom: 4rem;
+    .sentence{
+      padding-top: 2rem;
+      font-size: 20px;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+    .icon{
+      font-size: 2.4em;
+      color: rgb(48, 48, 48);
+    }
   }
 }
 
-.post-text{
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2rem;
-  padding-bottom: 4rem;
-}
-
-.post-content{
-  padding-top: 2rem;
-  font-size: 20px;
-  text-align: justify;
-  text-justify: inter-word;
-}
-
-.icon{
-  font-size: 2.4em;
-  color: rgb(48, 48, 48);
+@media screen and (max-width:1000px){
+  .content{
+    padding: 0.5rem;
+    padding-top: 1rem;
+    .left{
+      flex-direction: column;
+    }
+    .right{
+      flex-direction: column;
+    }
+    .thumb{
+      width: 60%;
+    }
+    .thumb-small{
+      width: 54%;
+    }
+  }
 }
 
 </style>
