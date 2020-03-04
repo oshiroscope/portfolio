@@ -1,4 +1,5 @@
 const contentful = require('contentful')
+// import contentful from 'contentful'
 // なぜかexport defaultだとnetlifyが失敗する
 // module.exports = contentful.createClient({
 export default contentful.createClient({
