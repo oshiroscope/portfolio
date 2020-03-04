@@ -1,6 +1,6 @@
 <template>
   <section class="background">
-    <img src="~/assets/images/teaser.png" class="teaser" v-parallax.absY="0.532">
+    <img src="~/assets/images/teaser.jpg" class="teaser" v-parallax.absY="0.532">
     <div class="container">
       <!-- bio -->
       <div class="box left">
@@ -18,7 +18,7 @@
             <a :href="bio.fields.instagram">
               <font-awesome-icon :icon="['fab', 'instagram']" />
             </a>
-            <font-awesome-icon :icon="['far', 'envelope']" />
+            <!-- <font-awesome-icon :icon="['far', 'envelope']" /> -->
             <!-- <font-awesome-icon icon="envelope" /> -->
           </div>
         </div>
