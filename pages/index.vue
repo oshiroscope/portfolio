@@ -200,6 +200,7 @@ img, video {
     .sentence{
       font-size: 0.9rem;
       padding-top: 1rem;
+      text-align: initial;
     }
   }
 }
