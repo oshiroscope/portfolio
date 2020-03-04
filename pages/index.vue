@@ -34,7 +34,8 @@
         </div>
       </div>
       <!-- contents -->
-      <div v-for="(post, index) in posts" :key="index" :to="'posts/'+post.fields.slug">
+      <!-- <div v-for="(post, index) in posts" :key="index" :to="'posts/'+post.fields.slug"> -->
+      <div v-for="(post, index) in posts" :key="index">
         <!-- 左右交互に表示する -->
         <!-- 偶数では左 -->
         <div v-if="index % 2 == 0" class="post-left">

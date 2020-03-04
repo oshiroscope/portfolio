@@ -1,6 +1,6 @@
 const contentful = require('contentful')
 // import contentful from 'contentful'
-// なぜかexport defaultだとnetlifyが失敗する
+// なぜかexport defaultだとnuxt generateが失敗する
 // module.exports = contentful.createClient({
 export default contentful.createClient({
   space: process.env.CTF_SPACE_ID,

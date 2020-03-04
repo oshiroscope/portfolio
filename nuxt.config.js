@@ -57,18 +57,18 @@ export default {
     typography: true,
   },
   generate: {
-    routes() {
-      return client
-        .getEntries({ content_type: 'post' })
-        .then(entries => {
-          return entries.items.map(entry => {
-            return {
-              route: "/posts/"+entry.fields.slug,
-              payload: entry
-            }
-          })
-        })
-    }
+    // routes() {
+    //   return client
+    //     .getEntries({ content_type: 'post' })
+    //     .then(entries => {
+    //       return entries.items.map(entry => {
+    //         return {
+    //           route: "/posts/"+entry.fields.slug,
+    //           payload: entry
+    //         }
+    //       })
+    //     })
+    // }
   },
   env: {
     CTF_SPACE_ID: process.env.CTF_SPACE_ID,
